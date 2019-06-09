@@ -3,6 +3,7 @@
 #     https://pytorch.org/tutorials/beginner/pytorch_with_examples.html
 #     https://github.com/uclaml/GOSE/blob/master/cnn_gose.py
 # Zhiping Xiao (Patricia) on June 8 2019
+# https://github.com/PatriciaXiao/AcceleratedSGDMethods
 
 import torch
 import torchvision
@@ -82,6 +83,7 @@ parser.add_argument("-a", "--algorithm", type=str, default="standard", choices=[
                     help="choice of algorithm")
 parser.add_argument('--NORM_THRESHOLD', type=float, default=0.001, metavar='LR',
                     help='threshold for gradient norm (default: 0.001)')
+parser.add_argument("-fo", "--file_out", type=str, default="", help="output log files' name")
 
 args = parser.parse_args()
 
@@ -93,6 +95,9 @@ normalize_flag = args.normalize
 normalize_string = "" if normalize_flag else "_woutnorm"
 log_flag = args.log_file
 log_step = args.log_step
+file_out_label = args.file_out
+if len(file_out_label):
+    file_out_label = "_"+file_out_label
 verbose = args.verbose
 DATASET_NAME = args.dataset
 BATCH_SIZE = args.batch_size
@@ -110,9 +115,9 @@ if algorithm == "ANCM":
     assert optimizer_choice == "SGD"
 
 if log_flag:
-    loss_file = "{5}_loss_{0}_{1}_{2}momentum_{3}{4}.csv".format(DATASET_NAME, optimizer_choice, momentum, LOSS_OPT, normalize_string, algorithm)
+    loss_file = "{0}_loss_{1}_{2}_{3}lr_{4}{5}.csv".format(algorithm, DATASET_NAME, optimizer_choice, learning_rate, LOSS_OPT, file_out_label)
     loss_file_data = {"step": [], "training loss": [], "testing acc": []}
-    time_file = "{5}_time_{0}_{1}_{2}momentum_{3}{4}.csv".format(DATASET_NAME, optimizer_choice, momentum, LOSS_OPT, normalize_string, algorithm)
+    time_file = "{0}_time_{1}_{2}_{3}lr_{4}{5}.csv".format(algorithm, DATASET_NAME, optimizer_choice, learning_rate, LOSS_OPT, file_out_label)
     time_file_data = {"epoch": [], "running time": [], "testing acc": []}
 
 
