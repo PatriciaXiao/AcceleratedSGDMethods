@@ -71,7 +71,7 @@ parser.add_argument("-log", "--log_file", type=str2bool, default=True,
 parser.add_argument("-logs", "--log_step", action="store_true", help="if we log by steps")
 parser.add_argument("-b", "--batch_size", type=int, default=128,
                     help="the training batch size")
-parser.add_argument("-bp", "--batch_size_power", type=int, default=16,
+parser.add_argument("-bp", "--batch_size_power", type=int, default=8, # 16
                     help="the training batch size for power method")
 parser.add_argument("-bt", "--batch_size_test", type=int, default=1024,
                     help="the training batch size")
@@ -296,10 +296,10 @@ class MyCNN(nn.Module):
 
         return large_batch_loss, large_batch_norm
 
-    def power_method(self, dataset_power, loss_function, epoch_power=8, inner_iteration_power=16, lr_power=0.5, eta_neg_stepsize = 0.5, normalization_lambda_power=5.0):
+    def power_method(self, dataset_power, loss_function, epoch_power=2, inner_iteration_power=8, lr_power=0.5, eta_neg_stepsize = 0.5, normalization_lambda_power=5.0):
         # load the parameters from args
-        n_epoch = epoch_power
-        inner_iteration = inner_iteration_power
+        n_epoch = epoch_power # 8
+        inner_iteration = inner_iteration_power # 16
         learning_rate = lr_power
         eta_neg = eta_neg_stepsize
         lambda_power = normalization_lambda_power
@@ -615,7 +615,7 @@ def main_accelerated():
         loss_df.to_csv(os.path.join(RESULT_DIR, loss_file), sep=",", index=False)
         time_df.to_csv(os.path.join(RESULT_DIR, time_file), sep=",", index=False)
 
-def main_GOSE(TRACK_INTERVAL=8):
+def main_GOSE(TRACK_INTERVAL=16): # 8
     test_accuracy = test(network, test_loader)
     print('Epoch: ', 0, '| test accuracy: %.2f' % test_accuracy, '| epoch training time: haven\'t started')
     if log_flag:
