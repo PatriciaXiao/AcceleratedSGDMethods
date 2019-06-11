@@ -1,6 +1,6 @@
 # Accelerated SGD Methods: ECE236C course project 2019 Spring
 
-This is Zhiping Xiao (Patricia)'s course project's code.
+This is Zhiping Xiao (Patricia)'s course project's code. Here is [the final report](./ECE236C_Final_Report.pdf).
 
 For PyTorch implementation I referred to the [official documentation](https://pytorch.org/tutorials/beginner/pytorch_with_examples.html) for help.
 
